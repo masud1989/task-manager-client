@@ -54,7 +54,7 @@ const MasterLayout = (props) => {
                             <div className="user-dropdown-content ">
                                 <div className="mt-4 text-center">
                                     <img className="icon-nav-img" src={userDemo} alt=""/>
-                                    <h6>Masud Rana</h6>
+                                    <h6> Masud Rana </h6>
                                     <hr className="user-dropdown-divider  p-0"/>
                                 </div>
                                 <NavLink to="/Profile" className="side-bar-item">

@@ -10,6 +10,7 @@ import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import LoginPage from "./pages/LoginPage";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage";
+import FullScreenLoader from "./components/MasterLayout/FullScreenLoader";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/ForgetPass" element={<ForgetPasswordPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <FullScreenLoader />
     </div>
   );
 }

@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import LazyLoader from '../components/MasterLayout/LazyLoader';
+import MasterLayout from '../components/MasterLayout/MasterLayout';
 
 const NewPage = () => {
     return (
         <div>
-            <h1>NewPage</h1>
+            <MasterLayout>
+                <Suspense fallback={<LazyLoader />}>
+
+                </Suspense>
+            </MasterLayout>
         </div>
     );
 };
