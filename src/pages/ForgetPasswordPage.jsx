@@ -7,7 +7,7 @@ const ForgetPasswordPage = () => {
         <div>
             <MasterLayout>
                 <Suspense fallback={<LazyLoader />}>
-
+                    
                 </Suspense>
             </MasterLayout>
         </div>
