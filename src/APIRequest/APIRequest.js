@@ -1,11 +1,14 @@
 import axios from "axios";
 import { ErrorToast, SuccessToast } from "../helpers/FormHelper";
-import { setToken, setUserDetails } from "../helpers/SessionHelper";
+import { getToken, setToken, setUserDetails } from "../helpers/SessionHelper";
 import { HideLoader, ShowLoader } from "../redux/state-slice/settingsSlice";
+import { SetCanceledTask, SetCompletedTask, SetNewTask, SetProgressTask } from "../redux/state-slice/taskSlice";
 import store from "../redux/store/store";
 
 const BaseURL = `https://masud-task-manager.herokuapp.com/api/v1`;
 
+const AxiosHeader = {headers:{"token":getToken()}}
+//Registration Request
 export function RegistartionRequest (email, firstName, lastName, mobile, password, photo) {
  // Loader Call Started  
  store.dispatch(ShowLoader()) 
@@ -50,6 +53,7 @@ export function RegistartionRequest (email, firstName, lastName, mobile, passwor
     })
 }
 
+//Login Request
 export function LoginRequest(email, password){
     //  Loader  Started
     store.dispatch(ShowLoader()) 
@@ -80,3 +84,68 @@ export function LoginRequest(email, password){
         return false;
     })
 }
+
+//Create New Task Request
+export function CreateNewTaskRequest (task, taskDesc) {
+    // Loader Call Started  
+    store.dispatch(ShowLoader()) 
+       const URL = BaseURL + "/createTask";
+       const PostBody = {task:task, taskDesc:taskDesc, status:"New"}
+   
+       return axios.post(URL, PostBody, AxiosHeader).then( (res)=>{
+           
+           //Loader Call Ended
+           store.dispatch(HideLoader())
+   
+           if(res.status ===200){ 
+            SuccessToast('Task Create Successful')
+            return true;
+           }
+           
+               else{
+                   ErrorToast('Something Went Wrong')
+                   return false;
+               }
+   
+       }).catch( ()=>{
+           //Loader Call Ended
+           store.dispatch(HideLoader())
+           ErrorToast('Something Went Wrong')
+           return false;
+       })
+}
+
+// Task List by Status
+export function TaskListByStatus(Status){
+
+    store.dispatch(ShowLoader())
+
+    const URL = BaseURL+"/taskListByStatus/"+Status;
+
+    axios.get(URL, AxiosHeader).then( (res)=>{
+        store.dispatch(HideLoader())
+        
+        if(res.status === 200){
+
+            if(Status === "New"){
+                store.dispatch(SetNewTask(res.data['data']))
+            }
+            else if(Status === "Completed"){
+                store.dispatch(SetCompletedTask(res.data['data']))
+            }
+            else if(Status === "Progress"){
+                store.dispatch(SetProgressTask(res.data['data']))
+            }
+            else if(Status === "Canceled"){
+                store.dispatch(SetCanceledTask(res.data['data']))
+            }
+        }
+        else{
+            ErrorToast('Something Went Wrong')
+        }
+    }).catch( (err)=>{
+        ErrorToast('Something Went Wrong')
+        store.dispatch(HideLoader())
+    })
+}
+   

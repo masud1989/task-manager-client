@@ -17,8 +17,7 @@ import { Fragment } from "react";
 function App() {
   if(getToken () ){
     return (
-      <Fragment>
-          
+      <Fragment> 
           <Routes>
             <Route path="/" element={< DashboardPage/>} />
             <Route path="/Create" element={<CreatePage />} />
@@ -40,7 +39,6 @@ function App() {
   else{
     return (
       <Fragment>
-          
             <Routes>
               <Route path="/" element={<Navigate to="/Login" replace />} />
               <Route path="/Login" element={<LoginPage />} />
@@ -48,7 +46,6 @@ function App() {
               <Route path="/ForgetPass" element={<ForgetPasswordPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
-         
           <FullScreenLoader />
       </Fragment>
     );
