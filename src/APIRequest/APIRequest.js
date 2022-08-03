@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ErrorToast, SuccessToast } from "../helpers/FormHelper";
+import { setToken, setUserDetails } from "../helpers/SessionHelper";
 import { HideLoader, ShowLoader } from "../redux/state-slice/settingsSlice";
 import store from "../redux/store/store";
 
@@ -40,6 +41,37 @@ export function RegistartionRequest (email, firstName, lastName, mobile, passwor
                 ErrorToast('Something Went Wrong')
                 return false;
             }
+
+    }).catch( ()=>{
+        //Loader Call Ended
+        store.dispatch(HideLoader())
+        ErrorToast('Something Went Wrong')
+        return false;
+    })
+}
+
+export function LoginRequest(email, password){
+    //  Loader  Started
+    store.dispatch(ShowLoader()) 
+
+    const URL = BaseURL + "/login";
+    const PostBody = {email:email,  password:password}
+
+    return axios.post(URL, PostBody).then( (res)=>{
+        
+        //Loader Call Ended
+        store.dispatch(HideLoader())
+
+        if(res.status ===200){ 
+            setToken(res.data['token'])
+            setUserDetails(res.data['data'])
+            SuccessToast('Login Success')
+            return true;
+        }
+        else{
+            ErrorToast('Invalid Email or Password')
+            return false;
+        }
 
     }).catch( ()=>{
         //Loader Call Ended

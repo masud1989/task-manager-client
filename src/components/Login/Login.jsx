@@ -1,26 +1,52 @@
 import React, {Fragment, useRef} from 'react';
 import {Link} from "react-router-dom";
-import {ErrorToast, IsEmail, IsEmpty} from "../../helpers/FormHelper";
-// import {LoginRequest} from "../../APIRequest/APIRequest";
+import {ErrorToast, IsEmail, IsEmpty, SuccessToast} from "../../helpers/FormHelper";
+import { LoginRequest } from '../../APIRequest/APIRequest';
+
 const Login = () => {
     let passwordRef,emailRef=useRef();
 
     const SubmitLogin=()=>{
-        let email=emailRef.value;
-        let password=passwordRef.value;
+        const email = emailRef.value;
+        const password = passwordRef.value;
+
         if(IsEmail(email)){
             ErrorToast("Invalid Email Address")
         }
+      
         else if(IsEmpty(password)){
-            ErrorToast("Password Required")
+            ErrorToast("Password is Required")
         }
         else{
-            // // LoginRequest(email,pass).then((result)=>{
-            // //     if(result===true){
-            // //         window.location.href="/"
-            // //     }
-            // })
+            LoginRequest(email, password).then((result)=>{
+                    if(result === true){
+                        window.location.href = "/"
+                    }
+            })
         }
+
+
+
+
+
+
+
+
+        // let email=emailRef.value;
+        // let password=passwordRef.value;
+        // if(IsEmail(email)){
+        //     ErrorToast("Invalid Email Address")
+        // }
+        // else if(IsEmpty(password)){
+        //     ErrorToast("Password Required")
+        // }
+        // else{
+        //     // // LoginRequest(email,pass).then((result)=>{
+        //     // //     if(result===true){
+        //     // //         window.location.href="/"
+        //     // //     }
+        //     // })
+        // }
     }
 
     return (
