@@ -5,22 +5,22 @@ import { CreateNewTaskRequest } from '../../APIRequest/APIRequest';
 
 const Create = () => {
 
-    let taskRef,taskDescRef  = useRef();
+    let titleRef, descriptionRef  = useRef();
     const navigate = useNavigate();
 
     const createNewTask = ()=>{
-        const task = taskRef.value; 
-        const taskDesc = taskDescRef.value; 
+        const title = titleRef.value; 
+        const description = descriptionRef.value; 
 
-        if(IsEmpty(task)){
+        if(IsEmpty(title)){
             ErrorToast("Task Name is Required ")
             }
 
-        else if(IsEmpty(taskDesc)){
+        else if(IsEmpty(description)){
             ErrorToast("Task Description is Required ")
         }
         else{
-            CreateNewTaskRequest(task, taskDesc).then( (res)=> {
+            CreateNewTaskRequest(title, description).then( (res)=> {
                 if(res === true){
                     navigate("/All")
                 }
@@ -38,9 +38,11 @@ const Create = () => {
                         <div className='card-body'>
                             <h4>Create New</h4>
                             <br />
-                            <input ref={input=>taskRef=input} className='form-control animated fadeInUp' type="text" placeholder='Task Name'  />
+                            {/* <input ref={input=>taskRef=input} className='form-control animated fadeInUp' type="text" placeholder='Task Name'  /> */}
+                            <input ref={(input)=>titleRef=input} placeholder="Task Name" className="form-control animated fadeInUp" type="text"/>
                             <br />
-                            <textarea ref={input=>taskDescRef=input} className='form-control animated fadeInUp' type="textarea" rows={5} placeholder='Task Name'  />
+                            <textarea ref={input=>descriptionRef=input} className='form-control animated fadeInUp' type="text" rows={5} placeholder='Task Name'  />
+                            {/* <textarea ref={(input)=>descriptionRef=input} rows={5} placeholder="Task Description" className="form-control animated fadeInUp" type="text"/> */}
                             <button onClick={createNewTask} className='btn btn-primary float-end mt-5'>Create</button>
                         </div>
                     </div>

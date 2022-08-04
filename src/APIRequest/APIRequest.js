@@ -52,7 +52,6 @@ export function RegistartionRequest (email, firstName, lastName, mobile, passwor
         return false;
     })
 }
-
 //Login Request
 export function LoginRequest(email, password){
     //  Loader  Started
@@ -84,13 +83,12 @@ export function LoginRequest(email, password){
         return false;
     })
 }
-
 //Create New Task Request
-export function CreateNewTaskRequest (task, taskDesc) {
+export function CreateNewTaskRequest (title, description) {
     // Loader Call Started  
     store.dispatch(ShowLoader()) 
        const URL = BaseURL + "/createTask";
-       const PostBody = {task:task, taskDesc:taskDesc, status:"New"}
+       const PostBody = {title:title, description:description, status:"New"}
    
        return axios.post(URL, PostBody, AxiosHeader).then( (res)=>{
            
@@ -114,7 +112,6 @@ export function CreateNewTaskRequest (task, taskDesc) {
            return false;
        })
 }
-
 // Task List by Status
 export function TaskListByStatus(Status){
 
