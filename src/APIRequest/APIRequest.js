@@ -2,6 +2,7 @@ import axios from "axios";
 import { ErrorToast, SuccessToast } from "../helpers/FormHelper";
 import { getToken, setToken, setUserDetails } from "../helpers/SessionHelper";
 import { HideLoader, ShowLoader } from "../redux/state-slice/settingsSlice";
+import { SetSummery } from "../redux/state-slice/summarySlice";
 import { SetCanceledTask, SetCompletedTask, SetNewTask, SetProgressTask } from "../redux/state-slice/taskSlice";
 import store from "../redux/store/store";
 
@@ -145,4 +146,21 @@ export function TaskListByStatus(Status){
         store.dispatch(HideLoader())
     })
 }
-   
+//Summery Request
+export function SummeryRequest(){
+   store.dispatch(ShowLoader()) 
+   const URL = BaseURL+"/taskCountByStatus";
+     axios.post(URL).then( (res)=>{ 
+       store.dispatch(HideLoader())
+       if(res.status ===200){ 
+        store.dispatch(SetSummery(res.data['data']))
+       }
+       else{
+            ErrorToast('Something Went Wrong')
+           }
+   }).catch( ()=>{
+       ErrorToast('Something Went Wrong6')
+       store.dispatch(HideLoader())
+       return false;
+   }) 
+} 
