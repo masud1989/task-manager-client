@@ -4,6 +4,7 @@ import { AiFillHourglass, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai"
 import { useSelector } from 'react-redux';
 import {Container} from "react-bootstrap";
 import DeleteAlert from '../../helpers/DeleteAlert';
+import { UpdateStatus } from '../../helpers/UpdateAlert';
 
 
 const New = () => {
@@ -22,6 +23,16 @@ const New = () => {
                 TaskListByStatus("New")
             }
         })
+    }
+
+      //Status Change Function
+      const StatusChange = (id, status)=>{
+        UpdateStatus(id, status).then( (result)=>{
+            if(result === true){
+                TaskListByStatus("New") 
+            }
+        })
+        
     }
 
     return (
@@ -54,7 +65,7 @@ const New = () => {
                                         <p className="animated fadeInUp">{item.description}</p>
                                         <p className="m-0 animated fadeInUp p-0">
                                             <AiFillHourglass/>{item.createdDate}
-                                            <a className="icon-nav text-primary mx-1"><AiOutlineEdit /></a>
+                                            <a onClick={StatusChange.bind(this,item._id, item.status)} className="icon-nav text-primary mx-1"><AiOutlineEdit /></a>
                                             <a onClick={DeleteItem.bind(this,item._id)} className="icon-nav text-danger mx-1"><AiOutlineDelete /></a>
                                             <a className="badge float-end bg-info">{item.status}</a>
                                         </p>

@@ -4,6 +4,7 @@ import { TaskListByStatus } from '../../APIRequest/APIRequest';
 import { useSelector } from 'react-redux';
 import {Container} from 'react-bootstrap';
 import DeleteAlert from '../../helpers/DeleteAlert';
+import { UpdateStatus } from '../../helpers/UpdateAlert';
 
 const Completed = () => {
 
@@ -21,7 +22,15 @@ const DeleteItem = (id)=>{
         }
     })
 }
-
+ //Status Change Function
+ const StatusChange = (id, status)=>{
+    UpdateStatus(id, status).then( (result)=>{
+        if(result === true){
+            TaskListByStatus("Completed") 
+        }
+    })
+    
+}
     return (
         <Fragment>
             <Container fluid={true} className="content-body">
@@ -52,7 +61,7 @@ const DeleteItem = (id)=>{
                                         <p className="animated fadeInUp">{item.description}</p>
                                         <p className="m-0 animated fadeInUp p-0">
                                             <AiFillCalendar/>{item.createdDate}
-                                            <a className="icon-nav text-primary mx-1"><AiOutlineEdit /></a>
+                                            <a onClick={StatusChange.bind(this,item._id, item.status)} className="icon-nav text-primary mx-1"><AiOutlineEdit /></a>
                                             <a onClick={DeleteItem.bind(this,item._id)} className="icon-nav text-danger mx-1"><AiOutlineDelete /></a>
                                             <a className="badge float-end bg-info">{item.status}</a>
                                         </p>
