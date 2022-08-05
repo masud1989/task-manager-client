@@ -150,7 +150,7 @@ export function TaskListByStatus(Status){
 export function SummeryRequest(){
    store.dispatch(ShowLoader()) 
    const URL = BaseURL+"/taskCountByStatus";
-     axios.post(URL).then( (res)=>{ 
+     axios.get(URL, AxiosHeader).then( (res)=>{ 
        store.dispatch(HideLoader())
        if(res.status ===200){ 
         store.dispatch(SetSummery(res.data['data']))
