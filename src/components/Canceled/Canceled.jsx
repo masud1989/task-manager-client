@@ -3,6 +3,7 @@ import { TaskListByStatus } from '../../APIRequest/APIRequest';
 import { AiFillCalendar, AiOutlineEdit, AiOutlineDelete, AiFillEyeInvisible } from "react-icons/ai";
 import { useSelector } from 'react-redux';
 import {Container} from 'react-bootstrap';
+import DeleteAlert from '../../helpers/DeleteAlert';
  
 const Canceled = () => {
     // Loading Data from Backend
@@ -12,6 +13,15 @@ const Canceled = () => {
 
     //Showing Data from Backend
     const CanceledList = useSelector( (state)=> state.task.Canceled) 
+
+    //Delete Item
+    const DeleteItem = (id)=>{
+        DeleteAlert(id).then( (result)=>{
+            if(result === true){
+                TaskListByStatus("Canceled")
+            }
+        })
+    }
 
     return (
         <Fragment>
@@ -33,7 +43,7 @@ const Canceled = () => {
                     </div>
                     <div className="row">
                     {
-                            CanceledList.map((item,i)=>
+                        CanceledList.map((item,i)=>
                             <div key={i.toString()}  className="col-12 col-lg-3 col-sm-6 col-md-4  p-2 m-3">
                                 <div className="card h-100">
                                     <div className="card-body">
@@ -44,7 +54,7 @@ const Canceled = () => {
                                         <p className="m-0 animated fadeInUp p-0">
                                             <AiFillCalendar/>{item.createdDate}
                                             <a className="icon-nav text-primary mx-1"><AiOutlineEdit /></a>
-                                            <a className="icon-nav text-danger mx-1"><AiOutlineDelete /></a>
+                                            <a onClick={DeleteItem.bind(this,item._id)} className="icon-nav text-danger mx-1"><AiOutlineDelete /></a>
                                             <a className="badge float-end bg-info">{item.status}</a>
                                         </p>
                                     </div>

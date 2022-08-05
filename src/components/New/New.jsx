@@ -3,15 +3,26 @@ import { TaskListByStatus } from '../../APIRequest/APIRequest';
 import { AiFillHourglass, AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { useSelector } from 'react-redux';
 import {Container} from "react-bootstrap";
+import DeleteAlert from '../../helpers/DeleteAlert';
 
 
 const New = () => {
 
+    // Page Load
     useEffect( ()=>{
         TaskListByStatus("New")
     }, [])
 
-    const NewList = useSelector((state)=>state.task.New)
+    const NewList = useSelector((state)=>state.task.New);
+
+    //Delete Function
+    const DeleteItem = (id)=>{
+        DeleteAlert(id).then( (result)=>{
+            if(result === true){
+                TaskListByStatus("New")
+            }
+        })
+    }
 
     return (
         <Fragment>
@@ -44,7 +55,7 @@ const New = () => {
                                         <p className="m-0 animated fadeInUp p-0">
                                             <AiFillHourglass/>{item.createdDate}
                                             <a className="icon-nav text-primary mx-1"><AiOutlineEdit /></a>
-                                            <a className="icon-nav text-danger mx-1"><AiOutlineDelete /></a>
+                                            <a onClick={DeleteItem.bind(this,item._id)} className="icon-nav text-danger mx-1"><AiOutlineDelete /></a>
                                             <a className="badge float-end bg-info">{item.status}</a>
                                         </p>
                                     </div>

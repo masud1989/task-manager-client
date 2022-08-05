@@ -164,3 +164,26 @@ export function SummeryRequest(){
        return false;
    }) 
 } 
+
+// Delete Request
+export function DeleteRequest(id){
+    store.dispatch(ShowLoader()) 
+    const URL = BaseURL+"/deleteTask/"+id;
+
+    return axios.get(URL, AxiosHeader).then( (res)=>{ 
+        store.dispatch(HideLoader())
+       if(res.status ===200){ 
+        SuccessToast('Data Delete Successful')
+        return true;
+       }
+       else{
+            ErrorToast('Something Went Wrong')
+            return false;
+           }
+   }).catch( ()=>{
+       ErrorToast('Something Went Wrong6')
+       store.dispatch(HideLoader())
+       return false;
+   }) 
+} 
+
