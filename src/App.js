@@ -25,7 +25,7 @@ function App() {
             <Route path="/Progress" element={<ProgressPage/>} />
             <Route path="/Completed" element={<CompletedPage />} />
             <Route path="/Canceled" element={<CanceledPage />} />
-            <Route path="/Profile" element={<ProfilePage />} />
+            <Route path="/profileDetails" element={<ProfilePage />} />
             <Route path="/Login" element={<LoginPage />} />
             <Route path="/Registration" element={<RegistrationPage />} />
             <Route path="/ForgetPass" element={<ForgetPasswordPage />} />

@@ -6,8 +6,7 @@ import { BsListNested } from "react-icons/bs";
 import { GrInProgress } from "react-icons/gr";
 import { ImCancelCircle } from "react-icons/im";
 import logo from "../../assets/images/logo.svg";
-import userDemo from '../../assets/images/user_demo.png';
-import { getUserDetails } from "../../helpers/SessionHelper";
+import { getUserDetails, removeSession } from "../../helpers/SessionHelper";
 
 
 
@@ -15,8 +14,8 @@ const MasterLayout = (props) => {
 
     let contentRef, sideNavRef = useRef();
 
-    const onLogout=()=>{
-        // removeSessions();
+    const logout=()=>{
+        removeSession();
     }
 
     const MenuBarClickHandler = () => {
@@ -35,10 +34,6 @@ const MasterLayout = (props) => {
         }
     };
 
-
-
-
-
     return (
         <Fragment>
             <Navbar  className="fixed-top px-0 shadow-sm ">
@@ -50,18 +45,18 @@ const MasterLayout = (props) => {
 
                     <div className="float-right h-auto d-flex">
                         <div className="user-dropdown">
-                            <img className="icon-nav-img icon-nav" src={userDemo} alt=""/>
+                            <img className="icon-nav-img icon-nav" src={getUserDetails()['photo']} alt=""/>
                             <div className="user-dropdown-content ">
                                 <div className="mt-4 text-center">
-                                    <img className="icon-nav-img" src={userDemo} alt=""/>
-                                    <h6> Masud Rana </h6>
+                                    <img className="icon-nav-img" src={getUserDetails()['photo']} alt=""/>
+                                    <h6> {getUserDetails()['firstName']} </h6>
                                     <hr className="user-dropdown-divider  p-0"/>
                                 </div>
-                                <NavLink to="/Profile" className="side-bar-item">
+                                <NavLink to="/profileDetails" className="side-bar-item">
                                     <AiOutlineUser className="side-bar-item-icon" />
                                     <span className="side-bar-item-caption">Profile</span>
                                 </NavLink>
-                                <a onClick={onLogout}  className="side-bar-item">
+                                <a onClick={logout}  className="side-bar-item">
                                     <AiOutlineLogout className="side-bar-item-icon" />
                                     <span className="side-bar-item-caption">Logout</span>
                                 </a>
