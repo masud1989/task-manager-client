@@ -16,8 +16,8 @@ import { Fragment } from "react";
 
 function App() {
   if(getToken () ){
-    return (
-      <Fragment> 
+    return (    //Admin Pages
+      <Fragment>     
           <Routes>
             <Route path="/" element={< DashboardPage/>} />
             <Route path="/Create" element={<CreatePage />} />
@@ -37,7 +37,7 @@ function App() {
   }
 
   else{
-    return (
+    return (  //Normal Pages
       <Fragment>
             <Routes>
               <Route path="/" element={<Navigate to="/Login" replace />} />
