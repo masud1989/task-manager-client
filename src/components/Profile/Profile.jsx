@@ -1,13 +1,42 @@
 import React, { useEffect, useRef } from 'react';
-import { GetProfileRequest } from '../../APIRequest/APIRequest';
+import { GetProfileRequest, UpdateProfileRequest } from '../../APIRequest/APIRequest';
 import { useSelector } from 'react-redux';
-
+import { ErrorToast, IsEmail, IsEmpty, IsMobile } from '../../helpers/FormHelper';
+import { useNavigate } from 'react-router'; 
 const Profile = () => {
 
     let emailRef, firstNameRef, lastNameRef, mobileRef, passwordRef, userImgRef, userImgVwRef = useRef();
-
+    const navigate = useNavigate();
     const  updateBtn = () =>{
-        alert('Ok');
+        let email=emailRef.value;
+        let firstName=firstNameRef.value;
+        let lastName=lastNameRef.value;
+        let mobile=mobileRef.value;
+        let password= passwordRef.value;
+        let photo= userImgVwRef.src; 
+
+        if(IsEmail(email)){
+            ErrorToast("Valid Email Address Required !")
+        }
+        else if(IsEmpty(firstName)){
+            ErrorToast("First Name Required !")
+        }
+        else if(IsEmpty(lastName)){
+            ErrorToast("Last Name Required !")
+        }
+        else if(!IsMobile(mobile)){
+            ErrorToast("Valid Mobile  Required !")
+        }
+        else if(IsEmpty(password)){
+            ErrorToast("Password Required !")
+        }
+        else{
+            UpdateProfileRequest(email, firstName, lastName, mobile, password, photo).then((res)=>{
+                if(res === true){
+                    navigate('/')
+                }
+            })
+        }
     }
 
     useEffect( ()=>{
@@ -55,7 +84,7 @@ const Profile = () => {
                                     </div>
 
                                 </div>
-                                <div lassName="row mt-2 p-0">
+                                <div className="row mt-2 p-0">
                                     <div className="col-md-4 p-2">
                                         <button onClick={updateBtn} className="btn mt-3 w-100 float-end btn-primary animated fadeInUp">Update</button>
                                     </div>

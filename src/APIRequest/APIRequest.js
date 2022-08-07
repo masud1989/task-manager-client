@@ -228,3 +228,29 @@ export function GetProfileRequest(){
         return false;
     }) 
  } 
+
+//Update Profile Data
+export function UpdateProfileRequest(email, firstName, lastName, mobile, password, photo){
+    store.dispatch(ShowLoader()) 
+    const URL = BaseURL+"/profileUpdate";
+    const PostBody = {"email": email, "firstName":firstName, "lastName":lastName, "mobile":mobile, "password": password, "photo":photo }
+    const profileDetails = {"email": email, "firstName":firstName, "lastName":lastName, "mobile":mobile, "photo":photo }
+
+     return axios.get(URL, PostBody, AxiosHeader).then( (res)=>{ 
+        store.dispatch(HideLoader())
+       
+        if(res.status === 200){ 
+            SuccessToast("Profile Update Successful")
+            setUserDetails(profileDetails)
+            return true;
+        }
+        else{
+             ErrorToast('Something Went Wrong')
+             return false;
+            }
+    }).catch( ()=>{
+        ErrorToast('Something Went Wrong6')
+        store.dispatch(HideLoader())
+        return false;
+    }) 
+ } 
